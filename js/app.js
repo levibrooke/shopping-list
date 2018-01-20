@@ -35,3 +35,13 @@ function checkBoxes() {
     }
   });
 }
+
+function removeItemButtonClicked(button) {
+  let buttons = Array.prototype.slice.call(document.getElementsByClassName(`remove-item`));
+  let index = buttons.indexOf(button);
+  let item = newList.items[index];
+  newList.removeItem(item);
+  contentDiv.innerHTML = "";
+  contentDiv.innerHTML = newList.render();
+  checkBoxes();
+}
