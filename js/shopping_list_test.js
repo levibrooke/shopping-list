@@ -74,11 +74,11 @@ describe(`ShoppingList.addItem()`, function() {
   let newList = new ShoppingList();
   it(`should be a function`, function() {
     expect(newList.addItem).to.be.a('function');
-  })
+  });
 
   it(`should only accept ShoppingListItem objects`, function() {
     expect(newList.addItem.bind(newList, `unicorn`)).to.throw(`Item`);
-  })
+  });
 
   it(`should add ShoppingListItems to ShoppingList`, function() {
     let banana = new ShoppingListItem(`banana`, `yellow fruit`);
@@ -91,7 +91,7 @@ describe(`ShoppingList.addItem()`, function() {
     expect(newList.items).to.include(coffee, keyboard, banana);
     expect(newList.items[2]).to.equal(coffee);
     expect(newList.items[0]).to.equal(banana);
-  })
+  });
 })
 
 describe(`ShoppingList.removeItem()`, function() {
@@ -115,18 +115,40 @@ describe(`ShoppingList.removeItem()`, function() {
 
   it(`should remove the object from ShoppingListItems.items`, function() {
     expect(newList.items).to.not.include(banana);
-  })
+  });
 
   it(`should remove the last object in items list, if no parameter given`, function() {
     expect(newList.items).to.not.include(coffee);
-  })
+  });
 
   it(`if items list is empty`, function() {
     newList.removeItem(keyboard);
     expect(newList.removeItem()).to.be.false;
-  })
+  });
 
   it(`if item is not in the list`, function() {
     expect(newList.removeItem(new ShoppingListItem(`iPhone`,`time sucking device`))).to.be.false;
-  })
-})
+  });
+});
+
+describe(`ShoppingList.render()`, function() {
+  it(`should be a function`, function() {
+    expect(new ShoppingList().render).to.be.a(`function`);
+  });
+
+  it(`should return an html formatted string`, function() {
+    let newList = new ShoppingList();
+    let banana = new ShoppingListItem(`banana`, `yellow fruit`);
+    let keyboard = new ShoppingListItem(`keyboard`, `type on me`);
+    let coffee = new ShoppingListItem(`coffee`, `developer fuel`);
+    newList.addItem(banana);
+    newList.addItem(keyboard);
+    newList.addItem(coffee);
+  
+    expect(newList.render()).to.equal(`<ul>${banana.render()}${keyboard.render()}${coffee.render()}</ul>`);
+  });
+
+  it(`should return an html formatted string (empty list)`, function() {
+    expect(new ShoppingList().render()).to.equal(`<ul></ul>`);
+  });
+});

@@ -24,6 +24,15 @@ class ShoppingList {
     return true;
   }
 
+  render() {
+    let res = `<ul>`;
+    this.items.forEach((curr) => {
+      res += curr.render();
+    });
+    res += `</ul>`;
+    return res;
+  }
+
   validateItem(item) {
     if (item instanceof ShoppingListItem) {
       return true;
