@@ -5,6 +5,7 @@ class ShoppingList {
 
   addItem(item) {
     this.validateItem(item);
+    item.index = this.items.length;
     this.items.push(item);
   }
 
@@ -13,6 +14,9 @@ class ShoppingList {
       this.validateItem(item);
       if (this.items.indexOf(item) !== -1) {
         this.items.splice(this.items.indexOf(item), 1);
+        for (let i = item.index; i < this.items.length; i++) {
+          this.items[i].index--;
+        }
         return true;
       }
       return false;
@@ -21,6 +25,9 @@ class ShoppingList {
       return false;
     }
     this.items.pop();
+    for (let i = item.index; i < this.items.length; i++) {
+      this.items[i].index--;
+    }
     return true;
   }
 

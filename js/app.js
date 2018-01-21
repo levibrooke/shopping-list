@@ -10,38 +10,32 @@ function add_to_shopping_list() {
   newList.addItem(newItem);
   contentDiv.innerHTML = "";
   contentDiv.innerHTML = newList.render();
-  checkBoxes();
   document.getElementById(`newitem-name`).value = "";
   document.getElementById(`newitem-desc`).value = "";
 }
 
 function changeCheckedStatus(checkbox) {
-  let checkboxes = Array.prototype.slice.call(document.getElementsByClassName(`checkbox`));
-  let index = checkboxes.indexOf(checkbox);
+  let index = checkbox.dataset.index;
   let item = newList.items[index];
+  let listItem = checkbox.parentElement;
+  let itemSpan = listItem.getElementsByTagName(`span`);
   if (item.is_done) {
     item.uncheck();
+    for (let i = 0; i < itemSpan.length; i++) {
+      itemSpan[i].setAttribute(`style`, `text-decoration: none`);
+    }
   } else {
     item.check();
+    for (let i = 0; i < itemSpan.length; i++) {
+      itemSpan[i].setAttribute(`style`, `text-decoration: line-through`);
+    }
   }
 }
 
-function checkBoxes() {
-  let checkboxes = Array.prototype.slice.call(document.getElementsByClassName(`checkbox`));
-  let items = newList.items;
-  checkboxes.forEach((curr, index) => {
-    if (items[index].is_done) {
-      curr.checked = true;
-    }
-  });
-}
-
 function removeItemButtonClicked(button) {
-  let buttons = Array.prototype.slice.call(document.getElementsByClassName(`remove-item`));
-  let index = buttons.indexOf(button);
+  let index = button.dataset.index;
   let item = newList.items[index];
   newList.removeItem(item);
   contentDiv.innerHTML = "";
   contentDiv.innerHTML = newList.render();
-  checkBoxes();
 }
