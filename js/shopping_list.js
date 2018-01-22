@@ -25,9 +25,6 @@ class ShoppingList {
       return false;
     }
     this.items.pop();
-    for (let i = item.index; i < this.items.length; i++) {
-      this.items[i].index--;
-    }
     return true;
   }
 
